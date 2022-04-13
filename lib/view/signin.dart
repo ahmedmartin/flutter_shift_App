@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shieft/controller/signin_controller.dart';
+import 'package:shieft/repository/user_repo/user_repo_test.dart';
+
+import 'admin/home.dart';
+import 'employees/shift.dart';
 
 
 class Signin extends StatelessWidget{
@@ -12,6 +16,9 @@ class Signin extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+
+    _signin_controller.signin_repo  = User_repo_test();
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -50,6 +57,18 @@ class Text_filled extends StatelessWidget{
             border:OutlineInputBorder(
               borderRadius: BorderRadius.circular(30),
             ),
+            prefixIcon: password ? GestureDetector(
+              child:  Icon(//login_controller.show_pass.value ?
+              Icons.remove_red_eye_outlined
+              //     :Icons.visibility_off_outlined
+              //   , color: Colors.black38,
+              //   size: 20,
+               ),
+              onTap: () {
+                // login_controller.show_pass.value = !login_controller.show_pass.value;
+                // print(login_controller.show_pass.value);
+              },
+            ):Icon(Icons.person),
             labelText: hint
         ),
         obscuringCharacter: '*',
@@ -73,7 +92,9 @@ class Button extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return Obx(()=> controller.wait.value?
+    const CircularProgressIndicator()
+        :GestureDetector(
       child: Container(
         width: 100,
         height: 50,
@@ -81,13 +102,32 @@ class Button extends StatelessWidget{
             borderRadius: BorderRadius.circular(24),
             color: Colors.blue[900]
         ),
-        child: Center(child: Text(text,style: TextStyle(color: Colors.white,
+        child: Center(child: Text(text,style: const TextStyle(color: Colors.white,
             fontSize: 20,fontWeight: FontWeight.bold),)) ,
       ),
-      onTap: (){
-        controller.signin(email.text, pass.text);
+      onTap: ()async{
+        await controller.signin(email.text, pass.text);
+        if(controller.model == null){
+          Get.snackbar('لم يتم تسجيل الدخول',"تأكد من بياناتك الشخصيه",backgroundColor: Color(0xff005194)
+              ,colorText:Colors.white,snackPosition: SnackPosition.BOTTOM );
+        }else{
+          if(controller.model!.role=="admin"){
+            Get.off(Home());
+          }else{
+            Get.off(Shift());
+          }
+        }
+        // if(email.text=="admin@mcit.com"&&pass.text=="123456"){
+        //   Get.to(Home());
+        // }else if((email.text=="manger@mcit.com"||email.text=="employee@mcit.com")&&pass.text=="123456"){
+        //   Get.off(Shift());
+        // }else{
+        //   Get.snackbar('UnAuthorized',"Invalid email and password"
+        //       ,colorText:const Color(0xff005194),snackPosition: SnackPosition.BOTTOM );
+        // }
+
       },
-    );
+    ));
   }
 
 }

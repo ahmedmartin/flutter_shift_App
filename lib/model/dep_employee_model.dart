@@ -1,4 +1,4 @@
-class Signin_model {
+class Dep_employee_model {
   String? _userName;
   String? _email;
   int? _deptId;
@@ -6,11 +6,9 @@ class Signin_model {
   String? _entryTelephone;
   String? _employeeNumber;
   int? _userId;
-  String? _role;
-  String? _department;
-  String? _token;
+  int? _roleId;
 
-  Signin_model(
+  Dep_employee_model(
       {String? userName,
         String? email,
         int? deptId,
@@ -18,9 +16,7 @@ class Signin_model {
         String? entryTelephone,
         String? employeeNumber,
         int? userId,
-        String? role,
-        String? department,
-        String? token}) {
+        int? roleId}) {
     if (userName != null) {
       this._userName = userName;
     }
@@ -42,14 +38,8 @@ class Signin_model {
     if (userId != null) {
       this._userId = userId;
     }
-    if (role != null) {
-      this._role = role;
-    }
-    if (department != null) {
-      this._department = department;
-    }
-    if (token != null) {
-      this._token = token;
+    if (roleId != null) {
+      this._roleId = roleId;
     }
   }
 
@@ -69,14 +59,10 @@ class Signin_model {
       _employeeNumber = employeeNumber;
   int? get userId => _userId;
   set userId(int? userId) => _userId = userId;
-  String? get role => _role;
-  set role(String? role) => _role = role;
-  String? get department => _department;
-  set department(String? department) => _department = department;
-  String? get token => _token;
-  set token(String? token) => _token = token;
+  int? get roleId => _roleId;
+  set roleId(int? roleId) => _roleId = roleId;
 
-  Signin_model.fromJson(Map<String, dynamic> json) {
+  Dep_employee_model.fromJson(Map<String, dynamic> json) {
     _userName = json['UserName'];
     _email = json['Email'];
     _deptId = json['DeptId'];
@@ -84,9 +70,7 @@ class Signin_model {
     _entryTelephone = json['EntryTelephone'];
     _employeeNumber = json['EmployeeNumber'];
     _userId = json['UserId'];
-    _role = json['Role'];
-    _department = json['Department'];
-    _token = json['token'];
+    _roleId = json['RoleId'];
   }
 
   Map<String, dynamic> toJson() {
@@ -98,9 +82,7 @@ class Signin_model {
     data['EntryTelephone'] = this._entryTelephone;
     data['EmployeeNumber'] = this._employeeNumber;
     data['UserId'] = this._userId;
-    data['Role'] = this._role;
-    data['Department'] = this._department;
-    data['token'] = this._token;
+    data['RoleId'] = this._roleId;
     return data;
   }
 }

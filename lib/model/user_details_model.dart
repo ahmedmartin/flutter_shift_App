@@ -1,4 +1,4 @@
-class Signin_model {
+class User_details_model {
   String? _userName;
   String? _email;
   int? _deptId;
@@ -6,11 +6,11 @@ class Signin_model {
   String? _entryTelephone;
   String? _employeeNumber;
   int? _userId;
-  String? _role;
-  String? _department;
-  String? _token;
+  int? _roleId;
+  String? _roleName;
+  String? _depName;
 
-  Signin_model(
+  User_details_model(
       {String? userName,
         String? email,
         int? deptId,
@@ -18,9 +18,9 @@ class Signin_model {
         String? entryTelephone,
         String? employeeNumber,
         int? userId,
-        String? role,
-        String? department,
-        String? token}) {
+        int? roleId,
+        String? roleName,
+        String? depName}) {
     if (userName != null) {
       this._userName = userName;
     }
@@ -42,14 +42,14 @@ class Signin_model {
     if (userId != null) {
       this._userId = userId;
     }
-    if (role != null) {
-      this._role = role;
+    if (roleId != null) {
+      this._roleId = roleId;
     }
-    if (department != null) {
-      this._department = department;
+    if (roleName != null) {
+      this._roleName = roleName;
     }
-    if (token != null) {
-      this._token = token;
+    if (depName != null) {
+      this._depName = depName;
     }
   }
 
@@ -69,14 +69,14 @@ class Signin_model {
       _employeeNumber = employeeNumber;
   int? get userId => _userId;
   set userId(int? userId) => _userId = userId;
-  String? get role => _role;
-  set role(String? role) => _role = role;
-  String? get department => _department;
-  set department(String? department) => _department = department;
-  String? get token => _token;
-  set token(String? token) => _token = token;
+  int? get roleId => _roleId;
+  set roleId(int? roleId) => _roleId = roleId;
+  String? get roleName => _roleName;
+  set roleName(String? roleName) => _roleName = roleName;
+  String? get depName => _depName;
+  set depName(String? depName) => _depName = depName;
 
-  Signin_model.fromJson(Map<String, dynamic> json) {
+  User_details_model.fromJson(Map<String, dynamic> json) {
     _userName = json['UserName'];
     _email = json['Email'];
     _deptId = json['DeptId'];
@@ -84,9 +84,9 @@ class Signin_model {
     _entryTelephone = json['EntryTelephone'];
     _employeeNumber = json['EmployeeNumber'];
     _userId = json['UserId'];
-    _role = json['Role'];
-    _department = json['Department'];
-    _token = json['token'];
+    _roleId = json['RoleId'];
+    _roleName = json['Role_name'];
+    _depName = json['Dep_name'];
   }
 
   Map<String, dynamic> toJson() {
@@ -98,9 +98,9 @@ class Signin_model {
     data['EntryTelephone'] = this._entryTelephone;
     data['EmployeeNumber'] = this._employeeNumber;
     data['UserId'] = this._userId;
-    data['Role'] = this._role;
-    data['Department'] = this._department;
-    data['token'] = this._token;
+    data['RoleId'] = this._roleId;
+    data['Role_name'] = this._roleName;
+    data['Dep_name'] = this._depName;
     return data;
   }
 }
