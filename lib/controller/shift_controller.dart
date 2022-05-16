@@ -88,7 +88,7 @@ class Shift_controller extends GetxController{
             return Colors.grey; // manger & not have employee & have work
           }
         }else {
-          return Colors.blue.shade600;
+          return Colors.grey;
         }// not manger & not today (user)
       }
   }
@@ -96,7 +96,7 @@ class Shift_controller extends GetxController{
   bool _check_user_day(String day,String month){
     for(int i=0;i<shift_list.value.length;i++){
       if(day+'-'+month == shift_list.value[i].date!.substring(0,5)){
-        if(_signin_controller.model!.userId == shift_list.value[i].userId )
+        if(_signin_controller.model!.userId == shift_list.value[i].userId ) // users belongs to admin and (have shift)
           return true;
       }
     }
@@ -105,7 +105,8 @@ class Shift_controller extends GetxController{
 
   bool _check_admin_day(String day,String month){
     for(int i=0;i<shift_list.value.length;i++){
-      if(day+'-'+month == shift_list.value[i].date!.substring(0,5)){
+      if(day+'-'+month == shift_list.value[i].date!.substring(0,5)
+      &&shift_list.value[i].adminId==_signin_controller.model!.userId){
           return true;
       }
     }

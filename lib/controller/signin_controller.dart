@@ -10,19 +10,20 @@ import 'package:shieft/repository/user_repo/user_repo.dart';
 class Signin_controller extends GetxController{
 
   RxBool wait =false.obs;
-  RxBool show_pass = true.obs;
+  RxBool show_pass = false.obs;
   bool ?login;
   Signin_model ?model;
   User_repo ?signin_repo;
 
 
 
+
   signin (String email, String pass) async{
 
     wait.value= true;
-    var login = await signin_repo!.login( email,  pass);
-    if(login.runtimeType!=String){
-      model=login;
+    var temp = await signin_repo!.login( email,  pass);
+    if(temp.runtimeType!=String){
+      model=Signin_model.fromJson(temp);
     }
     wait.value=false;
   }

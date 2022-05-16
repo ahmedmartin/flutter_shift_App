@@ -1,5 +1,5 @@
+import 'package:shieft/model/users_model.dart';
 import 'package:shieft/model/signin_model.dart';
-import 'package:shieft/model/user_bydepartment_model.dart';
 import 'package:shieft/model/user_details_model.dart';
 import 'package:shieft/repository/user_repo/user_repo.dart';
 
@@ -9,6 +9,7 @@ class User_repo_test extends User_repo {
 
   @override
   Future<dynamic> login(String email, String pass) async{
+    //--------api/Signin
     if(email.isNotEmpty&&pass.isNotEmpty){
       if(email=="admin@mcit.com"&&pass=="123456") {
         return Signin_model.fromJson({
@@ -55,7 +56,8 @@ class User_repo_test extends User_repo {
   }
 
   @override
-  Future<List<User_bydepartment_model>> get_users_bydepartment(int dep) async{
+  Future<List<users_model>> get_users_bydepartment(int dep) async{
+    //-----------api/Users/userbydepartment?dep_id=3
     List<dynamic> list =[
       {
         "UserName": "manger",
@@ -88,13 +90,14 @@ class User_repo_test extends User_repo {
         "RoleId": 3
       }
     ];
-    List<User_bydepartment_model> user_model = [];
-    list.forEach((element) => user_model.add(User_bydepartment_model.fromJson(element)));
+    List<users_model> user_model = [];
+    list.forEach((element) => user_model.add(users_model.fromJson(element)));
     return user_model;
   }
 
   @override
   Future<User_details_model> get_users_byid(int id) async{
+    //-----------api/Users/6
     return User_details_model.fromJson({
       "UserName": "manger",
       "Email": "manger@mcit.com",
@@ -108,5 +111,116 @@ class User_repo_test extends User_repo {
       "Dep_name": "depart"
     });
   }
+
+  @override
+  Future<List<users_model>> get_manger_users(int manger_id) async{
+    //-----------api/Users/mangerUsers/6
+    List<dynamic> list =[
+      {
+        "MangerId": 6,
+        "UserName": "admin",
+        "Email": "admin@mcit.com",
+        "DeptId": 1,
+        "Telephone": "0117474747",
+        "EntryTelephone": "4773",
+        "EmployeeNumber": "8838",
+        "UserId": 5,
+        "RoleId": 2
+      },
+      {
+        "MangerId": 6,
+        "UserName": "manger",
+        "Email": "manger@mcit.com",
+        "DeptId": 3,
+        "Telephone": "012840559",
+        "EntryTelephone": "4858",
+        "EmployeeNumber": "49038",
+        "UserId": 6,
+        "RoleId": 3
+      },
+      {
+        "MangerId": 6,
+        "UserName": "user",
+        "Email": "user@mcit.com",
+        "DeptId": 3,
+        "Telephone": "010474833",
+        "EntryTelephone": "9364",
+        "EmployeeNumber": "2845",
+        "UserId": 7,
+        "RoleId": 4
+      },
+      {
+        "MangerId": 6,
+        "UserName": "employee",
+        "Email": "employee@mcit.com",
+        "DeptId": 3,
+        "Telephone": "0123234344",
+        "EntryTelephone": "747474",
+        "EmployeeNumber": "4747",
+        "UserId": 1004,
+        "RoleId": 3
+      },
+      {
+        "MangerId": 6,
+        "UserName": "test",
+        "Email": "user@example.com",
+        "DeptId": 4,
+        "Telephone": "string",
+        "EntryTelephone": "string",
+        "EmployeeNumber": "string",
+        "UserId": 1005,
+        "RoleId": 3
+      },
+      {
+        "MangerId": 6,
+        "UserName": "test",
+        "Email": "user",
+        "DeptId": 4,
+        "Telephone": "874478",
+        "EntryTelephone": "string",
+        "EmployeeNumber": "string",
+        "UserId": 1006,
+        "RoleId": 3
+      },
+      {
+        "MangerId": 6,
+        "UserName": "test",
+        "Email": "user",
+        "DeptId": 4,
+        "Telephone": "874478",
+        "EntryTelephone": "string",
+        "EmployeeNumber": "string",
+        "UserId": 1007,
+        "RoleId": 4
+      },
+      {
+        "MangerId": 6,
+        "UserName": "test",
+        "Email": "user",
+        "DeptId": 4,
+        "Telephone": "874478",
+        "EntryTelephone": "string",
+        "EmployeeNumber": "string",
+        "UserId": 1008,
+        "RoleId": 3
+      }
+    ];
+    List<users_model> user_model = [];
+    list.forEach((element) => user_model.add(users_model.fromJson(element)));
+    return user_model;
+  }
+
+  @override
+  Future add_user(String user_name, String email, String pass, String telephone, String entry_telephone, int dep_id, String employee_num)async {
+    return 'user added succesfully';
+  }
+
+  @override
+  Future<String> change_pass(String new_pass,User_details_model model) {
+    // TODO: implement change_pass
+    throw UnimplementedError();
+  }
+
+
 
 }

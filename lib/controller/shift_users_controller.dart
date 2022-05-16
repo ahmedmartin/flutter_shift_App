@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
 import 'package:shieft/controller/signin_controller.dart';
 import 'package:shieft/model/department_model.dart';
+import 'package:shieft/model/users_model.dart';
 import 'package:shieft/model/shift_model.dart';
 import 'package:shieft/model/shift_type_model.dart';
-import 'package:shieft/model/user_bydepartment_model.dart';
 import 'package:shieft/model/user_details_model.dart';
 import 'package:shieft/repository/department_repo/department_repo.dart';
 import 'package:shieft/repository/shift_repo/shift_repo.dart';
@@ -18,20 +18,21 @@ class Shift_users_controller extends GetxController  {
   late Shift_repo shift_repo;
   late Department_repo dep_repo;
   RxList <Shift_model>search_list =[Shift_model()].obs;
-  List <User_bydepartment_model>users_list =[];
+  List <users_model>users_list =[];
   RxBool wait =false.obs;
-  RxString time ="Select Time".obs;
   late List <Shift_model>shifts_details_list ;
   late String date ;
   Signin_controller _signin_controller = Get.find();
   late bool is_manger ;
   late String msg;
   late User_details_model user_details_model;
+  int updated_user_id = 0;
+  int updated_shift_id = 0;
   //------drop down button----
-  RxList <User_bydepartment_model>dropdwon_users_list =[User_bydepartment_model()].obs;
+  RxList <users_model>dropdwon_users_list =[users_model()].obs;
   RxList <Shift_type_model>shift_type_list =[Shift_type_model()].obs;
   RxList <Department_model>department_list =[Department_model()].obs;
-  User_bydepartment_model ?user_model;
+  users_model ?user_model;
   RxInt user_id=0.obs;
   Shift_type_model ?shift_type_model;
   RxInt shift_type_id=0.obs;
@@ -41,16 +42,13 @@ class Shift_users_controller extends GetxController  {
 
 
   Shift_users_controller(){
-    //date = '$day-${DateTime.now().month+month_index}-${DateTime.now().year}';
     is_manger = _signin_controller.model!.role=='manger';
   }
 
   get_shifts_in_day()async{
-    // if(day<10){
-    //   date = '0$day-${DateTime.now().month+month_index}-${DateTime.now().year}'; //05-11-2022 (ex)
-    // }
+
     wait.value = true;
-    shifts_details_list = await shift_repo.get_shift_details_in_day("10-10-2022");//date
+    shifts_details_list = await shift_repo.get_shift_details_in_day(date);//date
     search_list.value.clear();
     search_list.value.addAll(shifts_details_list);
     wait.value = false;
@@ -60,19 +58,29 @@ class Shift_users_controller extends GetxController  {
    shift_type_list.value = await shift_repo.get_shift_type();
   }
 
-  get_department()async{
-    department_list.value = await dep_repo.get_departments();
+  get_manger_department()async{
+
+    department_list.value = await dep_repo.get_manger_departments(_signin_controller.model!.userId!);
   }
 
   get_users_bydepartment()async{
-    dropdwon_users_list.value.clear();
+    dropdwon_users_list.clear();
     user_id.value=0;
     users_list = await user_repo.get_users_bydepartment(department_id.value);
 
+    // ----------- choose employee not selected before --------
+    for(int i=0;i<users_list.length;i++){
+       bool b = true;
+      for(int j=0;j<shifts_details_list.length;j++){
+        if(updated_user_id != users_list[i].userId && users_list[i].userId == shifts_details_list[j].userId)
+           b = false;
+      }
+      if(b){
+        dropdwon_users_list.add(users_list[i]);
+      }
+    }
+    //------------------------------------
 
-    dropdwon_users_list.value.addAll(users_list.where((e1) => shifts_details_list.any((e2) => e2.userId==e1.userId)));
-    //dropdwon_users_list.value.removeWhere((e1) => shifts_details_list.any((e2) => e2.userId==e1.userId));
-    print(users_list);
   }
 
   get_userbyid(int id)async{
@@ -80,25 +88,48 @@ class Shift_users_controller extends GetxController  {
   }
 
   add_shift()async{
-    if(time.value=="Select Time"||shift_type_id.value==0||user_id.value==0){
+    if(shift_type_id.value==0||user_id.value==0){
       msg = "ادخل جميع البيانات بشكل صحيح";
     }else {
-      msg = await shift_repo.add_shift(date, time.value, shift_type_id.value, user_id.value, _signin_controller.model!.userId!);
+      msg = await shift_repo.add_shift(date, shift_type_id.value, user_id.value, _signin_controller.model!.userId!);
+      if(msg=='Created'){
+        user_id.value=0;
+        department_id.value=0;
+        shift_type_id.value=0;
+        dropdwon_users_list.value.removeWhere((element) => element.userId == user_id.value );
+        get_shifts_in_day();
+      }
     }
   }
 
-  search_in_shifts(String user_name){
+  edit_shift()async{
+    if(shift_type_id.value==0||user_id.value==0){
+      msg = "ادخل جميع البيانات بشكل صحيح";
+    }else {
+      msg = await shift_repo.edit_shift(updated_shift_id,date, shift_type_id.value, user_id.value, _signin_controller.model!.userId!);
+      if(msg=='تم التعديل بنجاح'){
+        user_id.value=0;
+        department_id.value=0;
+        shift_type_id.value=0;
+        dropdwon_users_list.value.removeWhere((element) => element.userId == user_id.value );
+        get_shifts_in_day();
+      }
+    }
+  }
+
+  search_in_shifts(String userName){
     search_list.clear();
-    if(user_name.isEmpty){
+    if(userName.isEmpty){
       search_list.value.addAll(shifts_details_list);
     }else{
       search_list.value.addAll(shifts_details_list.where((element) =>
-          element.userName!.contains(user_name) ||element.depName!.contains(user_name)));
+          element.userName!.contains(userName) ||element.depName!.contains(userName)));
     }
   }
 
   @override
   void dispose() {
     Get.delete<Shift_users_controller>();
+
   }
 }

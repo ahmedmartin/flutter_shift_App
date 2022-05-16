@@ -91,16 +91,14 @@ class User_details_model {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['UserName'] = this._userName;
-    data['Email'] = this._email;
-    data['DeptId'] = this._deptId;
-    data['Telephone'] = this._telephone;
-    data['EntryTelephone'] = this._entryTelephone;
-    data['EmployeeNumber'] = this._employeeNumber;
-    data['UserId'] = this._userId;
-    data['RoleId'] = this._roleId;
-    data['Role_name'] = this._roleName;
-    data['Dep_name'] = this._depName;
+    data['userName'] = this._userName;
+    data['email'] = this._email;
+    data['deptId'] = this._deptId;
+    data['telephone'] = this._telephone;
+    data['entryTelephone'] = this._entryTelephone;
+    data['employeeNumber'] = this._employeeNumber;
+    data['userId'] = this._userId;
+    data['roleId'] = this._roleId;
     return data;
   }
 }

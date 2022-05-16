@@ -1,4 +1,5 @@
-class User_bydepartment_model {
+class users_model {
+  int? _mangerId;
   String? _userName;
   String? _email;
   int? _deptId;
@@ -8,8 +9,9 @@ class User_bydepartment_model {
   int? _userId;
   int? _roleId;
 
-  User_bydepartment_model(
-      {String? userName,
+  users_model(
+      {int? mangerId,
+        String? userName,
         String? email,
         int? deptId,
         String? telephone,
@@ -17,6 +19,9 @@ class User_bydepartment_model {
         String? employeeNumber,
         int? userId,
         int? roleId}) {
+    if (mangerId != null) {
+      this._mangerId = mangerId;
+    }
     if (userName != null) {
       this._userName = userName;
     }
@@ -43,6 +48,8 @@ class User_bydepartment_model {
     }
   }
 
+  int? get mangerId => _mangerId;
+  set mangerId(int? mangerId) => _mangerId = mangerId;
   String? get userName => _userName;
   set userName(String? userName) => _userName = userName;
   String? get email => _email;
@@ -62,7 +69,8 @@ class User_bydepartment_model {
   int? get roleId => _roleId;
   set roleId(int? roleId) => _roleId = roleId;
 
-  User_bydepartment_model.fromJson(Map<String, dynamic> json) {
+  users_model.fromJson(Map<String, dynamic> json) {
+    _mangerId = json['MangerId'];
     _userName = json['UserName'];
     _email = json['Email'];
     _deptId = json['DeptId'];
@@ -75,6 +83,7 @@ class User_bydepartment_model {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['MangerId'] = this._mangerId;
     data['UserName'] = this._userName;
     data['Email'] = this._email;
     data['DeptId'] = this._deptId;
