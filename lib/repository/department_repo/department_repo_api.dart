@@ -23,7 +23,6 @@ class Department_repo_api extends Department_repo{
 
   @override
   Future<List<Department_model>> get_manger_departments(int manger_id) async {
-    print('heree');
     // final response = await Dio().get('${url}/Departments/manger_departments/${manger_id}');
     final response = await Dio().get('${url}/Departments/manger_departments/2010');
     List<Department_model> shift_model = [];

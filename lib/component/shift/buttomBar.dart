@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shieft/controller/shift_controller.dart';
+import 'package:shieft/view/employees/send_message.dart';
 import 'package:shieft/view/employees/shift_users_count.dart';
 
 import '../../view/employees/departmen_users.dart';
 import '../../view/employees/user_info.dart';
 
 class buttom_bar extends StatelessWidget{
+
+  Shift_controller controller;
+  buttom_bar(this.controller);
+
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -37,6 +44,7 @@ class buttom_bar extends StatelessWidget{
               ),
 
               //report employee number ber month
+              if(controller.is_manger!)
               GestureDetector (
                 child: const CircleAvatar(
                   backgroundColor: Colors.white,
@@ -48,6 +56,7 @@ class buttom_bar extends StatelessWidget{
               ),
 
               //message
+              if(controller.is_manger!)
               GestureDetector (
                 child: const CircleAvatar(
                   backgroundColor: Colors.white,
@@ -55,7 +64,7 @@ class buttom_bar extends StatelessWidget{
                   child: Icon(Icons.email,size: 25,color: Color(0xff005194),),
                 ),
 
-                //onTap: ()=> Get.to(User_info()),
+                onTap: ()=> Get.to(Send_message()),
               ),
 
               //employee info

@@ -108,6 +108,7 @@ class Shift_users_controller extends GetxController  {
     }else {
       msg = await shift_repo.edit_shift(updated_shift_id,date, shift_type_id.value, user_id.value, _signin_controller.model!.userId!);
       if(msg=='تم التعديل بنجاح'){
+        push_notification_from_api(department_id.value.toString());
         user_id.value=0;
         department_id.value=0;
         shift_type_id.value=0;
@@ -115,6 +116,13 @@ class Shift_users_controller extends GetxController  {
         get_shifts_in_day();
       }
     }
+  }
+
+  push_notification_from_api(String topic) async {
+    await shift_repo.notification_special_department('نبطجيه يوم'+date,
+        'تم تعديل نبطجيات اليوم ... انقر للمزيد',
+        "https://www.learndash.com/wp-content/uploads/Notification-Add-on.png",
+        topic);
   }
 
   search_in_shifts(String userName){

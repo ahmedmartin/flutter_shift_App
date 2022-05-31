@@ -25,13 +25,13 @@ class Shift_controller extends GetxController{
   String get_day_name(int day_index,int month_index){
 
     switch(get_day_num(day_index,month_index)) {
-      case 1: return "Mon";
+      case 1: return "Mo";
       case 2: return "Tu";
-      case 3: return "Wen";
-      case 4: return "Tha";
-      case 5: return "Fri";
-      case 6: return "Sat";
-      case 7: return "Sun";
+      case 3: return "We";
+      case 4: return "Th";
+      case 5: return "Fr";
+      case 6: return "Sa";
+      case 7: return "Su";
     }
     return"";
   }

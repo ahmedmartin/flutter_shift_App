@@ -36,7 +36,7 @@ class Gridview extends StatelessWidget{
           itemBuilder: (context,index){
             return _draw_list_item(index+1,_shift_controller,month_index);
           })),
-    ).frosted(blur: 1,frostColor: Colors.white,borderRadius: BorderRadius.circular(20) );
+    );//.frosted(blur: 1,frostColor: Colors.white,borderRadius: BorderRadius.circular(20) );
   }
 
 }

@@ -34,7 +34,7 @@ class Shift extends StatelessWidget{
               )),
           const SizedBox(height: 10,),
           color_description(_shift_controller),
-          buttom_bar()
+          buttom_bar(_shift_controller)
         ],
       ),
     );

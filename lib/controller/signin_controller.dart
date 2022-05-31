@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
 import 'package:shieft/model/signin_model.dart';
 import 'package:shieft/repository/user_repo/user_repo.dart';
@@ -24,6 +25,7 @@ class Signin_controller extends GetxController{
     var temp = await signin_repo!.login( email,  pass);
     if(temp.runtimeType!=String){
       model=Signin_model.fromJson(temp);
+      FirebaseMessaging.instance.subscribeToTopic(model!.deptId.toString());
     }
     wait.value=false;
   }

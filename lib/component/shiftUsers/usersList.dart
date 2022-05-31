@@ -23,7 +23,7 @@ class User_list extends StatelessWidget{
                   fontWeight: FontWeight.w900 ),),
               trailing: Text(controller.search_list.value[index].shiftName!,style: const TextStyle(color:Color(0xff005194),
                   fontSize: 18,fontWeight: FontWeight.bold),),
-              leading: IconButton(
+              leading: controller.is_manger?IconButton(
                 icon:const Icon(Icons.edit,color: Color(0xff005194),size: 20,),
                 onPressed: (){
                   //-------update shift-------
@@ -31,7 +31,7 @@ class User_list extends StatelessWidget{
                   controller.updated_shift_id = controller.search_list.value[index].shiftId!;
                   _Show_dialog(controller.date+" :تعديل موظف فى يوم", Add_shift(controller));
                 },
-              ),
+              ):const Icon(Icons.remove_red_eye,color: Color(0xff005194),size: 25,),
             subtitle:Text(controller.search_list.value[index].depName!,style: const TextStyle(color:Color(0xff005194),
                 fontWeight: FontWeight.w600 ),) ,
               onTap: () async {

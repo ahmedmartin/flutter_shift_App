@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "998113653520",
+    "project_id": "shifts-6bea3",
+    "storage_bucket": "shifts-6bea3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:998113653520:android:f9c5ee114471f1acdcab95",
+        "android_client_info": {
+          "package_name": "com.mcit.shieft.shieft"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "998113653520-mt4h3lh1r02bpot7f7dff213ag6fhaqn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhS0Iq29aeQXUGUeLzjtMxE3XOTSdEDLg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "998113653520-mt4h3lh1r02bpot7f7dff213ag6fhaqn.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "998113653520-q1uj8k9oorlmvpa5cn1vh7aeg5133qc0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mcit.shieft.shieft"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

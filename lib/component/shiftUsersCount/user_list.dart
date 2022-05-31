@@ -12,7 +12,7 @@ class User_list extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: Get.height-90,width: Get.width,
+      height: Get.height-100,width: Get.width,
       child: ListView.builder(
           itemCount: all_users.length,
           itemBuilder: (context,index){

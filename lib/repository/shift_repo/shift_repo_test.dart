@@ -232,4 +232,18 @@ class Shift_repo_test extends Shift_repo{
     throw UnimplementedError();
   }
 
+  @override
+  Future<String> notification_multiple_departments(String noti_title, String noti_body, String noti_image, String topics) {
+    // TODO: implement notification_multiple_departments
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<String> notification_special_department(String noti_title, String noti_body, String noti_image, String topic) {
+    // TODO: implement notification_special_department
+    throw UnimplementedError();
+  }
+
+
+
 }
