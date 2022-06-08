@@ -9,14 +9,14 @@ import 'package:shieft/repository/user_repo/user_repo.dart';
 class User_info_controller extends GetxController with StateMixin<User_details_model>{
 
   late User_repo user_repo;
-  Signin_controller _signin_controller = Get.find();
+  Signin_controller signin_controller = Get.find();
   TextEditingController new_pass = TextEditingController();
   late String msg;
 
 
 
   get_user(){
-    user_repo.get_users_byid(_signin_controller.model!.userId!).
+    user_repo.get_users_byid(signin_controller.model!.userId!).
     then((value) => change(value, status: RxStatus.success()));
   }
 

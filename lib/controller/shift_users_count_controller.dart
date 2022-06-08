@@ -5,6 +5,7 @@ import 'package:shieft/repository/shift_repo/shift_repo.dart';
 
 import '../model/department_model.dart';
 import '../repository/department_repo/department_repo.dart';
+import '../repository/notifications_repo/notification_repo.dart';
 
 
 
@@ -16,7 +17,8 @@ class Shift_users_count_controller extends GetxController with StateMixin<List<U
   Signin_controller _signin_controller = Get.find();
   late Shift_repo shift_repo;
   late Department_repo dep_repo;
-  String date=DateTime.now().month.toString().padLeft(2,'0')+'-'+DateTime.now().year.toString();
+  late Notification_repo noti_repo;
+  String date = DateTime.now().month.toString().padLeft(2,'0')+'-'+DateTime.now().year.toString();
   String msg='';
   List <Department_model>department_list =[Department_model()].obs;
 
@@ -59,7 +61,7 @@ class Shift_users_count_controller extends GetxController with StateMixin<List<U
   }
 
   push_notification_from_api(String topics) async {
-    msg = await shift_repo.notification_multiple_departments('نبطجيات شهر'+date,
+    msg = await noti_repo.notification_multiple_departments('نبطجيات شهر'+date,
         'تم تسكين نبطجيات الشهر ... انقر للمزيد',
         "https://www.learndash.com/wp-content/uploads/Notification-Add-on.png",
         topics);

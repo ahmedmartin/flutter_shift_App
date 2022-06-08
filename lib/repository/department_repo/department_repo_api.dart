@@ -24,7 +24,7 @@ class Department_repo_api extends Department_repo{
   @override
   Future<List<Department_model>> get_manger_departments(int manger_id) async {
     // final response = await Dio().get('${url}/Departments/manger_departments/${manger_id}');
-    final response = await Dio().get('${url}/Departments/manger_departments/2010');
+    final response = await Dio().get('${url}/Departments/manger_departments/${manger_id}');
     List<Department_model> shift_model = [];
     if(response.statusCode==200)
       response.data.forEach((element) => shift_model.add(Department_model.fromJson(element)));

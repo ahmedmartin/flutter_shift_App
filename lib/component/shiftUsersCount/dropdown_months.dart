@@ -16,11 +16,14 @@ class Draw_dropdown_months extends StatefulWidget{
 class _Draw_dropdown_months extends State<Draw_dropdown_months>{
 
   Shift_users_count_controller controller;
-  List<String> months = ['${DateTime.now().month.toString().padLeft(2,'0')}-${DateTime.now().year.toString()}',
-    '${DateTime.now().add(Duration(days: 29)).month.toString().padLeft(2,'0')}-${DateTime.now().add(Duration(days: 30)).year.toString()}'];
+  DateTime date = DateTime(DateTime.now().year,DateTime.now().month);
+  List<String> months = [];
   String hint;
 
-  _Draw_dropdown_months(this.hint,this.controller);
+  _Draw_dropdown_months(this.hint,this.controller){
+    months = ['${date.month.toString().padLeft(2,'0')}-${date.year.toString()}',
+      '${date.add(Duration(days: 31)).month.toString().padLeft(2,'0')}-${date.add(Duration(days: 31)).year.toString()}'];
+  }
 
   @override
   Widget build(BuildContext context) {

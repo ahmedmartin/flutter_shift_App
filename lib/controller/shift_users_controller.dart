@@ -9,6 +9,8 @@ import 'package:shieft/repository/department_repo/department_repo.dart';
 import 'package:shieft/repository/shift_repo/shift_repo.dart';
 import 'package:shieft/repository/user_repo/user_repo.dart';
 
+import '../repository/notifications_repo/notification_repo.dart';
+
 
 
 
@@ -17,9 +19,11 @@ class Shift_users_controller extends GetxController  {
   late User_repo user_repo;
   late Shift_repo shift_repo;
   late Department_repo dep_repo;
+  late Notification_repo noti_repo;
   RxList <Shift_model>search_list =[Shift_model()].obs;
   List <users_model>users_list =[];
   RxBool wait =false.obs;
+  bool wait_add_or_update_or_remove_shift = false;
   late List <Shift_model>shifts_details_list ;
   late String date ;
   Signin_controller _signin_controller = Get.find();
@@ -88,6 +92,7 @@ class Shift_users_controller extends GetxController  {
   }
 
   add_shift()async{
+    wait_add_or_update_or_remove_shift = true;
     if(shift_type_id.value==0||user_id.value==0){
       msg = "ادخل جميع البيانات بشكل صحيح";
     }else {
@@ -100,9 +105,11 @@ class Shift_users_controller extends GetxController  {
         get_shifts_in_day();
       }
     }
+    wait_add_or_update_or_remove_shift = false;
   }
 
   edit_shift()async{
+    wait_add_or_update_or_remove_shift = true;
     if(shift_type_id.value==0||user_id.value==0){
       msg = "ادخل جميع البيانات بشكل صحيح";
     }else {
@@ -116,10 +123,18 @@ class Shift_users_controller extends GetxController  {
         get_shifts_in_day();
       }
     }
+    wait_add_or_update_or_remove_shift = false;
+  }
+
+  remove_shift(int shift_id)async{
+    wait_add_or_update_or_remove_shift = true;
+    msg = await shift_repo.remove_shift(shift_id);
+    get_shifts_in_day();
+    wait_add_or_update_or_remove_shift = false;
   }
 
   push_notification_from_api(String topic) async {
-    await shift_repo.notification_special_department('نبطجيه يوم'+date,
+    await noti_repo.notification_special_department('نبطجيه يوم'+date,
         'تم تعديل نبطجيات اليوم ... انقر للمزيد',
         "https://www.learndash.com/wp-content/uploads/Notification-Add-on.png",
         topic);

@@ -20,7 +20,7 @@ class Shift extends StatelessWidget{
     return Scaffold(
       body:Column(
         children: [
-          const SizedBox(height: 30,),
+          const SizedBox(height: 25,),
           const Text("جدول الشيفت للموظفين",style: TextStyle(fontSize: 30,color:Color(0xff005194),
               fontWeight: FontWeight.bold),),
           SingleChildScrollView(

@@ -26,7 +26,7 @@ class Draw_page_header extends StatelessWidget{
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          const SizedBox(height: 20,),
+         // const SizedBox(height: 20,),
           IconButton(
               padding: EdgeInsets.only(right: 30),
               icon: Icon(Icons.edit,size: 30,color: Colors.white,),

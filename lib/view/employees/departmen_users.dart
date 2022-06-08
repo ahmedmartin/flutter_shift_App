@@ -23,6 +23,11 @@ class Department_users extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor:const Color(0xff005194) ,
+        title: Text("بيانات موظفين الاداره",
+        style: const TextStyle(fontSize: 20,color:Colors.white, fontWeight: FontWeight.bold),) ,
+      ),
       body: controller.obx((value) => User_list(value!)),
       floatingActionButton: Visibility(
         visible: controller.is_manger(),

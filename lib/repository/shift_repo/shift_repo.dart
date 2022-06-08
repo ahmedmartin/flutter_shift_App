@@ -18,8 +18,6 @@ abstract class Shift_repo {
 
   Future<String> edit_shift(int shift_id,String date,int shift_type_id,int user_id,int admin_id);
 
-  Future<String> notification_multiple_departments(String noti_title,String noti_body,String noti_image,String topics);
-
-  Future<String> notification_special_department(String noti_title,String noti_body,String noti_image,String topic);
+  Future<String> remove_shift(int shift_id);
 
 }

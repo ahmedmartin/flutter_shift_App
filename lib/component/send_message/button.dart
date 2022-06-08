@@ -13,7 +13,9 @@ class Button_send_message extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return Obx(()=> controller.wait.value?
+    const CircularProgressIndicator()
+        :GestureDetector(
       child: Container(
         width: 150,
         height: 50,
@@ -25,11 +27,11 @@ class Button_send_message extends StatelessWidget{
             fontSize: 20,fontWeight: FontWeight.bold),)) ,
       ),
       onTap: ()async{
-        String temp = await controller.push_notification_from_api();
-        Get.snackbar("انتباه", temp, backgroundColor: Color(0xff005194),
+        await controller.push_notification_from_api();
+        Get.snackbar("انتباه", controller.msg, backgroundColor: Color(0xff005194),
             colorText: Colors.white, snackPosition: SnackPosition.BOTTOM);
       },
-    );
+    ));
   }
 
 }

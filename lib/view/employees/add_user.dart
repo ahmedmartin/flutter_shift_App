@@ -32,6 +32,10 @@ class Add_user extends StatelessWidget{
     return WillPopScope(
       onWillPop: ()async{Get.off(Department_users());return true;},
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: const Color(0xff005194),
+          title: Text('اضافه موظف جديد',style: TextStyle(color: Colors.white),),
+        ),
         body: SingleChildScrollView(
           child: Column(
             children: [

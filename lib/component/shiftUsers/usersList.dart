@@ -23,49 +23,107 @@ class User_list extends StatelessWidget{
                   fontWeight: FontWeight.w900 ),),
               trailing: Text(controller.search_list.value[index].shiftName!,style: const TextStyle(color:Color(0xff005194),
                   fontSize: 18,fontWeight: FontWeight.bold),),
+
+              // if user is manger show him update icon
               leading: controller.is_manger?IconButton(
                 icon:const Icon(Icons.edit,color: Color(0xff005194),size: 20,),
                 onPressed: (){
-                  //-------update shift-------
-                  controller.updated_user_id = controller.search_list.value[index].userId!;
-                  controller.updated_shift_id = controller.search_list.value[index].shiftId!;
-                  _Show_dialog(controller.date+" :تعديل موظف فى يوم", Add_shift(controller));
+                  // if manger clicked on item inside his department update an item
+                  if(check_Manger_department(controller.search_list.value[index].adminId!)) {
+                    //-------update shift-------
+                    controller.updated_user_id =
+                    controller.search_list.value[index].userId!;
+                    controller.updated_shift_id =
+                    controller.search_list.value[index].shiftId!;
+                    _Show_dialog_update(controller.date + " :تعديل موظف فى يوم", Add_shift(controller));
+                  }else{
+                    _show_dialog_notmanger();
+                  }
                 },
+                // if user is not manger he can only show users info
               ):const Icon(Icons.remove_red_eye,color: Color(0xff005194),size: 25,),
             subtitle:Text(controller.search_list.value[index].depName!,style: const TextStyle(color:Color(0xff005194),
                 fontWeight: FontWeight.w600 ),) ,
               onTap: () async {
                 await controller.get_userbyid(controller.search_list.value[index].userId!);
-                _show_dialog();
+                _show_dialog_user_info(index);
               },
             );
           })),
     );
   }
-  _show_dialog(){
+  _show_dialog_user_info(int index){
     Get.defaultDialog(
         title: "بيانات الموظف",
         titleStyle:TextStyle(color:Color(0xff005194),fontSize: 30,fontWeight: FontWeight.bold) ,
-        content: _Show_user_info(controller)
+        content: _Show_user_info(controller),
+        cancel: controller.is_manger?
+        IconButton(
+            icon: Icon(Icons.delete,size: 30,color:Color(0xff005194) ,),
+            onPressed:(){
+              Get.back();
+              _show_dialog_remove_employee_from_shift(controller.search_list[index].shiftId!);
+            })
+            :Container()
     );
   }
 
-  _Show_dialog(String title,Widget content ){
+  _show_dialog_remove_employee_from_shift(int shift_id){
+    Get.defaultDialog(
+      title: "حذف موظف",
+      titleStyle:TextStyle(color:Color(0xff005194),fontSize: 30,fontWeight: FontWeight.bold) ,
+      content: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Text('هل انت واثق من انك تريد حذف هذا الموظف من الشيفت ؟', style: TextStyle(color:Color(0xff005194),fontSize: 20,
+            fontWeight: FontWeight.bold),textAlign: TextAlign.center,),
+      ),
+      onConfirm: () async {
+        if(! controller.wait_add_or_update_or_remove_shift) {
+          await controller.remove_shift(shift_id);
+          Get.back();
+          Get.snackbar(
+              "انتباه", controller.msg, backgroundColor: Color(0xff005194),
+              colorText: Colors.white, snackPosition: SnackPosition.BOTTOM);
+        }
+      },
+      onCancel: (){}
+    );
+  }
+
+  _show_dialog_notmanger(){
+    Get.defaultDialog(
+        title: "لا يمكن التعديل",
+        titleStyle:TextStyle(color:Color(0xff005194),fontSize: 30,fontWeight: FontWeight.bold) ,
+        content: Text('هذا الموظف لا يتبع اى اداره لك', style: TextStyle(color:Color(0xff005194),fontSize: 20,
+            fontWeight: FontWeight.bold),textAlign: TextAlign.center,),
+    );
+  }
+
+  _Show_dialog_update(String title,Widget content ){
     Get.defaultDialog(
         title:title,
         titleStyle: TextStyle(fontSize: 20,color:Color(0xff005194),
             fontWeight: FontWeight.bold),
         content:content,
         onConfirm: ()async{
-          await controller.edit_shift();
-          Get.back();
-          Get.snackbar("انتباه", controller.msg,backgroundColor:Color(0xff005194) ,
-              colorText:Colors.white,snackPosition: SnackPosition.BOTTOM );
+          if(! controller.wait_add_or_update_or_remove_shift) { // ready to do action (not waiting)
+            await controller.edit_shift();
+            Get.back();
+            Get.snackbar(
+                "انتباه", controller.msg, backgroundColor: Color(0xff005194),
+                colorText: Colors.white, snackPosition: SnackPosition.BOTTOM);
+          }
         } ,
         onCancel: (){}
     );
   }
+
+  bool check_Manger_department(int mangerId){
+    return controller.department_list.value.where((element) => element.mangerId==mangerId).isNotEmpty;
+  }
+
 }
+
 
 class _Show_user_info extends StatelessWidget{
 

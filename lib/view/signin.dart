@@ -27,7 +27,7 @@ class Signin extends StatelessWidget{
         child: Column(
           children: [
             SizedBox(height: 50,),
-            Image.asset("assets/jobs.gif",height: 200,width: 300,),
+            Image.asset("assets/signin.gif",height: 200,width: 300,),
             SizedBox(height: 40,),
             Text_filled(email_controller,"Email", false,_signin_controller),
             SizedBox(height: 20,),

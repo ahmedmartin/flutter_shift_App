@@ -22,6 +22,11 @@ class User_info  extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title:const Text("بيانات الموظف",
+          style: TextStyle(color:Colors.white),) ,
+        backgroundColor: const Color(0xff005194),
+      ),
       body: controller.obx((value){
         return SingleChildScrollView(
           child: Column(

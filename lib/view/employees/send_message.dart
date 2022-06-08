@@ -5,6 +5,7 @@ import 'package:shieft/component/send_message/dropdown_departments.dart';
 import 'package:shieft/component/send_message/textFilled.dart';
 import 'package:shieft/controller/send_message_controller.dart';
 import 'package:shieft/repository/department_repo/department_repo_api.dart';
+import 'package:shieft/repository/notifications_repo/notification_repo_api.dart';
 import 'package:shieft/repository/shift_repo/shift_repo_api.dart';
 
 
@@ -18,11 +19,12 @@ class Send_message extends StatelessWidget{
 
     controller = Get.put(Send_message_controller());
     controller.dep_repo=Department_repo_api();
-    controller.shift_repo=Shift_repo_api();
+    controller.noti_repo=Notification_repo_api();
     controller.get_manger_department();
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color(0xff005194),
         title: Text('ارسال رساله الى الاداره',style: TextStyle(color: Colors.white),),
       ),
       body: Column(

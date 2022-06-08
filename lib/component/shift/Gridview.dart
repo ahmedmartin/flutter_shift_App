@@ -9,33 +9,45 @@ class Gridview extends StatelessWidget{
 
   Shift_controller _shift_controller;
   int month_index;
-  Gridview(this._shift_controller,this.month_index);
+  late String month;
+  Gridview(this._shift_controller,this.month_index){
+    month = (DateTime.now().month+month_index).toString();
+    if(month=='13')
+      month='1';
+
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: _shift_controller.get_month_lastDay(month_index)>28?Get.height-300:Get.height-350,
-      width: Get.width,
-      padding: EdgeInsets.only(right: 10,left: 10),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(40),
-          border: Border.all(color: Colors.blue.shade200,width: 18)
-      ),
-      child: Obx(()=>_shift_controller.wait.value?CircularProgressIndicator():
-      GridView.builder(
-          itemCount:_shift_controller.get_month_lastDay(month_index)+7 ,
-          controller: ScrollController(initialScrollOffset: 0),
-          scrollDirection: Axis.vertical ,
-          //physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 7,
-            childAspectRatio:.8,
-            crossAxisSpacing:8,
-            mainAxisSpacing: 20,
+    return Column(
+      children: [
+        Text(month+' شهر ',style: TextStyle(fontSize: 20,color:Color(0xff005194),
+            fontWeight: FontWeight.bold),),
+        Container(
+          height: _shift_controller.get_month_lastDay(month_index)>28?Get.height-280:Get.height-330,
+          width: Get.width,
+          padding: EdgeInsets.only(right: 10,left: 10),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(40),
+              border: Border.all(color: Colors.blue.shade200,width: 18)
           ),
-          itemBuilder: (context,index){
-            return _draw_list_item(index+1,_shift_controller,month_index);
-          })),
+          child: Obx(()=>_shift_controller.wait.value?CircularProgressIndicator():
+          GridView.builder(
+              itemCount:_shift_controller.get_month_lastDay(month_index)+7 ,
+              controller: ScrollController(initialScrollOffset: 0),
+              scrollDirection: Axis.vertical ,
+              //physics: const NeverScrollableScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 7,
+                childAspectRatio:.8,
+                crossAxisSpacing:8,
+                mainAxisSpacing: 20,
+              ),
+              itemBuilder: (context,index){
+                return _draw_list_item(index+1,_shift_controller,month_index);
+              })),
+        ),
+      ],
     );//.frosted(blur: 1,frostColor: Colors.white,borderRadius: BorderRadius.circular(20) );
   }
 

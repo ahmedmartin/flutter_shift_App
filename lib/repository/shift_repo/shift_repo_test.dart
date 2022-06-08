@@ -244,6 +244,12 @@ class Shift_repo_test extends Shift_repo{
     throw UnimplementedError();
   }
 
+  @override
+  Future<String> remove_shift(int shift_id) {
+    // TODO: implement remove_shift
+    throw UnimplementedError();
+  }
+
 
 
 }

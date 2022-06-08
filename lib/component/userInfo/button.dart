@@ -20,6 +20,7 @@ class Button extends StatelessWidget{
             fontSize: 25,fontWeight: FontWeight.bold),)) ,
       ),
       onTap: (){
+        controller.signin_controller.model= null;
         Get.offAll(Signin());
       },
     );
