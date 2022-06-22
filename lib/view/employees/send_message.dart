@@ -25,7 +25,7 @@ class Send_message extends StatelessWidget{
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xff005194),
-        title: Text('ارسال رساله الى الاداره',style: TextStyle(color: Colors.white),),
+        title: Text('ارسال رساله الى موظفين الاداره',style: TextStyle(color: Colors.white),),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,

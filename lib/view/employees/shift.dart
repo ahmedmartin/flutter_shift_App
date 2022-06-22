@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shieft/controller/shift_controller.dart';
+import 'package:shieft/repository/department_repo/department_repo_api.dart';
 import 'package:shieft/repository/shift_repo/shift_repo_api.dart';
 import '../../component/shift/Gridview.dart';
 import '../../component/shift/buttomBar.dart';
@@ -15,6 +16,8 @@ class Shift extends StatelessWidget{
 
     Shift_controller _shift_controller= Get.put(Shift_controller());
     _shift_controller.shift_repo = Shift_repo_api();
+    _shift_controller.dep_repo = Department_repo_api();
+    _shift_controller.get_manger_department();
     _shift_controller.get_shift_details_in_month();
 
     return Scaffold(

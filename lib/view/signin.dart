@@ -29,11 +29,11 @@ class Signin extends StatelessWidget{
             SizedBox(height: 50,),
             Image.asset("assets/signin.gif",height: 200,width: 300,),
             SizedBox(height: 40,),
-            Text_filled(email_controller,"Email", false,_signin_controller),
+            Text_filled(email_controller,"اسم المستخدم", false,_signin_controller),
             SizedBox(height: 20,),
-            Text_filled(pass_controller, "Password", true,_signin_controller),
+            Text_filled(pass_controller, "الرقم السرى", true,_signin_controller),
             SizedBox(height: 30,),
-            Button("SignIn",email_controller,pass_controller,_signin_controller)
+            Button("تسجيل دخول",email_controller,pass_controller,_signin_controller)
           ],
         ),
       ),

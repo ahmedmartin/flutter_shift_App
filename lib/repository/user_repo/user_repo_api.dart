@@ -24,8 +24,8 @@ class User_repo_api extends GetConnect with User_repo{
   }
 
   @override
-  Future<List<users_model>> get_users_bydepartment(int dep) async {
-    final response = await Dio().get('${url}/Users/userbydepartment/${dep}');
+  Future<List<users_model>> get_users_bydepartment(int depid) async {
+    final response = await Dio().get('${url}/Users/userbydepartment/${depid}');
     List<users_model> user_model = [];
     if(response.statusCode==200) {
       response.data.forEach((element) =>
@@ -53,7 +53,12 @@ class User_repo_api extends GetConnect with User_repo{
       "password": pass
     });
     return response.data;
+    // final response = await post("${url}/Signin", {"email": email,
+    //   "password": pass
+    // });
+    // return response.body;
   }catch(e){
+    print("log in error$e");
     return 'تاكد من بياناتك';
   }
   }
@@ -73,14 +78,14 @@ class User_repo_api extends GetConnect with User_repo{
     };
     try {
       final response = await Dio().post('${url}/Users', data: body);
-      print(response.statusMessage);
       if (response.statusCode == HttpStatus.ok) {
         return users_model.fromJson(response.data);
       }else if(response.statusCode == HttpStatus.notFound){
         return response.data;
       }
     }catch(e){
-      return 'هذا المستخدم موجود بالفعل';
+      return e.toString();
+      //return 'هذا المستخدم موجود بالفعل';
     }
   }
 
@@ -91,12 +96,12 @@ class User_repo_api extends GetConnect with User_repo{
     body['password']=new_pass;
 
       final response = await Dio().put('${url}/Users', data: body);
-      print(response.statusMessage);
       if (response.statusCode == HttpStatus.ok) {
         return 'تم تغير الرقم السرى';
       }else {
         return response.statusMessage!;
       }
   }
+
 
 }

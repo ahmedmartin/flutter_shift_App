@@ -34,14 +34,35 @@ class Add_user_controller extends GetxController{
 
   add_user()async{
     wait.value = true;
-    var temp = await user_repo.add_user(user_name.text, email.text, pass.text, telephone.text,
-        entry_telephone.text, department_id.value, employee_num.text);
-    if(temp.runtimeType==users_model){
-      msg = 'تم اضافه الموظف بنجاح فى الاداره';
+    if(check_entity_notEmpty()) {
+      var temp = await user_repo.add_user(
+          user_name.text,
+          email.text,
+          pass.text,
+          telephone.text,
+          entry_telephone.text,
+          department_id.value,
+          employee_num.text);
+      if (temp.runtimeType == users_model) {
+        msg = 'تم اضافه الموظف بنجاح فى الاداره';
+      } else {
+        msg = temp;
+      }
     }else{
-      msg = temp;
+      msg = 'يرجى ملئ جميع الحقول';
     }
     wait.value=false;
+  }
+
+  bool check_entity_notEmpty(){
+    if(user_name.text.isEmpty) return false;
+    if(email.text.isEmpty) return false;
+    if(pass.text.isEmpty) return false;
+    if(telephone.text.isEmpty) return false;
+    if(entry_telephone.text.isEmpty) return false;
+    if(employee_num.text.isEmpty) return false;
+    if(department_id.value==0) return false;
+    return true;
   }
 
 }

@@ -26,7 +26,7 @@ class Shift_users_controller extends GetxController  {
   bool wait_add_or_update_or_remove_shift = false;
   late List <Shift_model>shifts_details_list ;
   late String date ;
-  Signin_controller _signin_controller = Get.find();
+  Signin_controller signin_controller = Get.find();
   late bool is_manger ;
   late String msg;
   late User_details_model user_details_model;
@@ -46,7 +46,7 @@ class Shift_users_controller extends GetxController  {
 
 
   Shift_users_controller(){
-    is_manger = _signin_controller.model!.role=='manger';
+    is_manger = signin_controller.model!.role=='manger';
   }
 
   get_shifts_in_day()async{
@@ -64,7 +64,7 @@ class Shift_users_controller extends GetxController  {
 
   get_manger_department()async{
 
-    department_list.value = await dep_repo.get_manger_departments(_signin_controller.model!.userId!);
+    department_list.value = await dep_repo.get_manger_departments(signin_controller.model!.userId!);
   }
 
   get_users_bydepartment()async{
@@ -96,7 +96,7 @@ class Shift_users_controller extends GetxController  {
     if(shift_type_id.value==0||user_id.value==0){
       msg = "ادخل جميع البيانات بشكل صحيح";
     }else {
-      msg = await shift_repo.add_shift(date, shift_type_id.value, user_id.value, _signin_controller.model!.userId!);
+      msg = await shift_repo.add_shift(date, shift_type_id.value, user_id.value, signin_controller.model!.userId!);
       if(msg=='Created'){
         user_id.value=0;
         department_id.value=0;
@@ -113,7 +113,7 @@ class Shift_users_controller extends GetxController  {
     if(shift_type_id.value==0||user_id.value==0){
       msg = "ادخل جميع البيانات بشكل صحيح";
     }else {
-      msg = await shift_repo.edit_shift(updated_shift_id,date, shift_type_id.value, user_id.value, _signin_controller.model!.userId!);
+      msg = await shift_repo.edit_shift(updated_shift_id,date, shift_type_id.value, user_id.value, signin_controller.model!.userId!);
       if(msg=='تم التعديل بنجاح'){
         push_notification_from_api(department_id.value.toString());
         user_id.value=0;

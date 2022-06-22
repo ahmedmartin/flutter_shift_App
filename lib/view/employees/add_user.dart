@@ -39,10 +39,7 @@ class Add_user extends StatelessWidget{
         body: SingleChildScrollView(
           child: Column(
             children: [
-              const SizedBox(height: 15,),
-              const Text("اضافه موظف جديد",
-                style: TextStyle(fontSize: 20,color:Color(0xff005194), fontWeight: FontWeight.bold),),
-              const SizedBox(height: 15,),
+              const SizedBox(height: 20,),
               Text_filled(controller.user_name, 'اسم الموظف', controller),
               const SizedBox(height: 20,),
               Text_filled(controller.email, 'الايميل الالكترونى', controller),
@@ -57,7 +54,8 @@ class Add_user extends StatelessWidget{
               const SizedBox(height: 20,),
               Draw_dropdown_department('اختار الاداره للموظف', controller),
               const SizedBox(height: 40,),
-              Button('اضافه موظف', controller)
+              Button('اضافه موظف', controller),
+              const SizedBox(height: 20,),
             ],
           ),
         ),

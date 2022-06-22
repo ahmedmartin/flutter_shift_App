@@ -19,17 +19,17 @@ class Button extends StatelessWidget{
     const CircularProgressIndicator()
         :GestureDetector(
       child: Container(
-        width: 100,
+        width: 150,
         height: 50,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(24),
-            color: Colors.blue[900]
+            color: Color(0xff005194)
         ),
         child: Center(child: Text(text,style: const TextStyle(color: Colors.white,
             fontSize: 20,fontWeight: FontWeight.bold),)) ,
       ),
       onTap:()async{
-        await controller.signin(email.text, pass.text);
+        await controller.signin(email.text+'@mcit.gov.eg', pass.text);
         if(controller.model == null){
           Get.snackbar('لم يتم تسجيل الدخول',"تأكد من بياناتك الشخصيه",backgroundColor: Color(0xff005194)
               ,colorText:Colors.white,snackPosition: SnackPosition.BOTTOM );

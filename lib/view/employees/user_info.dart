@@ -37,7 +37,7 @@ class User_info  extends StatelessWidget{
               SizedBox(height: 30,),
               Show_user_info(value),
               SizedBox(height: 20,),
-              Button('Sign out', controller)
+              Button('تسجيل خروج', controller)
             ],
           ),
         );

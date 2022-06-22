@@ -29,7 +29,7 @@ class User_list extends StatelessWidget{
                 icon:const Icon(Icons.edit,color: Color(0xff005194),size: 20,),
                 onPressed: (){
                   // if manger clicked on item inside his department update an item
-                  if(check_Manger_department(controller.search_list.value[index].adminId!)) {
+                  if(check_Manger_department(controller.search_list[index].depName!)) {
                     //-------update shift-------
                     controller.updated_user_id =
                     controller.search_list.value[index].userId!;
@@ -62,7 +62,11 @@ class User_list extends StatelessWidget{
             icon: Icon(Icons.delete,size: 30,color:Color(0xff005194) ,),
             onPressed:(){
               Get.back();
-              _show_dialog_remove_employee_from_shift(controller.search_list[index].shiftId!);
+              if(check_Manger_department(controller.search_list[index].depName!)) {
+                _show_dialog_remove_employee_from_shift(controller.search_list[index].shiftId!);
+              }else{
+                _show_dialog_notmanger();
+              }
             })
             :Container()
     );
@@ -118,8 +122,9 @@ class User_list extends StatelessWidget{
     );
   }
 
-  bool check_Manger_department(int mangerId){
-    return controller.department_list.value.where((element) => element.mangerId==mangerId).isNotEmpty;
+  bool check_Manger_department(String dep_name){
+
+    return controller.department_list.value.where((element) => element.depName==dep_name).isNotEmpty;
   }
 
 }

@@ -29,13 +29,16 @@ class Send_message_controller extends GetxController{
 
    push_notification_from_api() async {
     wait.value = true;
+    print(department_id==0 || message.text.isEmpty);
     if(department_id==0 || message.text.isEmpty) {
       msg = 'يجب ادخال جميع البيانات بشكل صحيح';
+    }else {
+      msg = await noti_repo.notification_special_department(
+          ' رساله لاداره ' + '${department_model!.depName}',
+          message.text,
+          "https://www.learndash.com/wp-content/uploads/Notification-Add-on.png",
+          department_id.toString());
     }
-      msg =  await noti_repo.notification_special_department(' رساله لاداره '+'${department_model!.depName}',
-        message.text,
-        "https://www.learndash.com/wp-content/uploads/Notification-Add-on.png",
-        department_id.toString());
 
     wait.value = false;
   }
